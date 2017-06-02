@@ -291,6 +291,9 @@ chrome.tabs.onUpdated.addListener(function(tabId , info) {
             
             var message = "您已成功付款" + stay_pay_order.amount + "元";
             post_order_state_to_scm(stay_pay_order, state_pay_succeed, tab.id, message);
+          }else if(tab.url.startsWith("https://trade.1688.com/order/trade_flow.htm")) { //1688报错页面
+
+            post_order_state_to_scm(stay_pay_order, state_error, tab.id, "系统错误");
           }else if (tab.url.startsWith("https://buyertrade.taobao.com/trade/pay_success.htm")) {//淘宝支付成功页面。
 
             chrome.tabs.executeScript(tab.id, {file: "js/taobao_pay_success.js"}, function(){
