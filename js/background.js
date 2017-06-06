@@ -3,11 +3,11 @@
 // found in the LICENSE file.
 
   var order_data = [
-    {"order_id":"13175801777733729","order_type":1,"purchase_order_id":21653,"buyer":"dandeng","amount":0.95,"freight":"6.00","cargo_value":"99.00"},
-    {"order_id":"13162263715733","order_type":1,"purchase_order_id":21653,"buyer":"dandeng","amount":0.25,"freight":"6.00","cargo_value":"99.00"},
-    {"order_id":"taobao9583901733729","order_type":2,"purchase_order_id":21652,"buyer":"dandeng","amount":0.06,"freight":"6.00","cargo_value":"40.00"},
-    {"order_id":"14081680747733729","order_type":2,"purchase_order_id":21649,"buyer":"dandeng","amount":0.06,"freight":"30.00","cargo_value":"1116.00"},
-    {"order_id":"13178742186733729","order_type":1,"purchase_order_id":21653,"buyer":"dandeng","amount":0.25,"freight":"6.00","cargo_value":"99.00"},
+    // {"order_id":"13175801777733729","order_type":1,"purchase_order_id":21653,"buyer":"dandeng","amount":0.95,"freight":"6.00","cargo_value":"99.00"},
+    // {"order_id":"13162263715733","order_type":1,"purchase_order_id":21653,"buyer":"dandeng","amount":0.25,"freight":"6.00","cargo_value":"99.00"},
+    // {"order_id":"taobao9583901733729","order_type":2,"purchase_order_id":21652,"buyer":"dandeng","amount":0.06,"freight":"6.00","cargo_value":"40.00"},
+    // {"order_id":"14081680747733729","order_type":2,"purchase_order_id":21649,"buyer":"dandeng","amount":0.06,"freight":"30.00","cargo_value":"1116.00"},
+    // {"order_id":"13178742186733729","order_type":1,"purchase_order_id":21653,"buyer":"dandeng","amount":0.25,"freight":"6.00","cargo_value":"99.00"},
     // {"order_id":"13654783154733729","order_type":2,"purchase_order_id":21649,"buyer":"dandeng","amount":1146.44,"freight":"30.00","cargo_value":"1116.00"},
     // {"order_id":"136742622087337","order_type":2,"purchase_order_id":21649,"buyer":"dandeng","amount":1146.44,"freight":"30.00","cargo_value":"1116.00"},
     // {"order_id":"13674262208733729","order_type":2,"purchase_order_id":21649,"buyer":"dandeng","amount":0.5,"freight":"30.00","cargo_value":"1116.00"},
@@ -315,6 +315,7 @@ chrome.tabs.onUpdated.addListener(function(tabId , info) {
                 });
             });   
           }else if (tab.url.startsWith("https://trade.taobao.com/trade/payError.htm")) { //淘宝报错页面
+
               chrome.tabs.executeScript(tab.id, {file: "js/taobao_trade_pay.js"}, function(){
               chrome.tabs.sendMessage(tab.id, {
                   "type": "taobao_order_pay", 
@@ -331,6 +332,11 @@ chrome.tabs.onUpdated.addListener(function(tabId , info) {
                     }
                   }
               });
+            });
+          }else if (tab.url.startsWith("https://cashiergtj.alipay.com/standard/result/payResult.htm")) {//支付结果页面，出现抽奖广告，自动关闭广告继续任务
+
+            chrome.tabs.executeScript(tab.id, {file: "js/pay_result.js"}, function(){
+                
             });
           }else if (tab.url.startsWith("https://buy.tmall.com/order/paySuccess.htm")) {
             var message = "您已成功付款" + stay_pay_order.amount + "元-天猫订单";
