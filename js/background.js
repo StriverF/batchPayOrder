@@ -334,10 +334,10 @@ chrome.tabs.onUpdated.addListener(function(tabId , info) {
               });
             });
           }else if (tab.url.startsWith("https://cashiergtj.alipay.com/standard/result/payResult.htm")) {//支付结果页面，出现抽奖广告，自动关闭广告继续任务
-
-            chrome.tabs.executeScript(tab.id, {file: "js/pay_result.js"}, function(){
+            console.log("天猫弹出广告页面，支付无法继续！寻找解决方案中。。。");
+            // chrome.tabs.executeScript(tab.id, {file: "js/pay_result.js"}, function(){
                 
-            });
+            // });
           }else if (tab.url.startsWith("https://buy.tmall.com/order/paySuccess.htm")) {
             var message = "您已成功付款" + stay_pay_order.amount + "元-天猫订单";
             post_order_state_to_scm(stay_pay_order, state_pay_succeed, tab.id, message);
