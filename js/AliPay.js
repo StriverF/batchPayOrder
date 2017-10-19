@@ -14,7 +14,10 @@ function ali_pay(alipay_password) {
 
 //监听插件后台js 发送的消息。
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	console.log("开始验证支付金额");
 	var order_real_amount = $(".order-real-amount em").text();
+	console.log(order_real_amount);
+	console.log(request);
 	if (request.type == "order_amount") {
 		var order = request.order;
 		if (order.amount == order_real_amount) {

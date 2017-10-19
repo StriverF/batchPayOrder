@@ -228,7 +228,11 @@ chrome.tabs.onUpdated.addListener(function(tabId , info) {
                   if (obj && obj.type == "order_state" && obj.order_state_info) {
                     var pay_succeed_order = obj.order;
                     var message = obj.order_state_info;
-                    post_order_state_to_scm(pay_succeed_order, state_have_paid, tab.id, message);
+                    if ( obj.order_state_info.indexOf("交易关闭") > 0) {
+                      post_order_state_to_scm(pay_succeed_order, state_error, tab.id, message);
+                    }else{
+                      post_order_state_to_scm(pay_succeed_order, state_have_paid, tab.id, message);
+                    }
                   }else if (obj && obj.type == "order_not_find" && obj.order_state_info) {
                     var not_find_order = obj.order;
                     var message = obj.order_state_info;
@@ -271,15 +275,13 @@ chrome.tabs.onUpdated.addListener(function(tabId , info) {
                   };
                 });
             });           
-          }else if(tab.url.startsWith("https://cashiergtj.alipay.com/standard/lightpay/lightPayCashier.htm")){ //企业支付宝支付页面
-            
+          }else if(tab.url.startsWith("https://cashierew9.alipay.com/standard/lightpay/lightPayCashier.htm")){ //企业支付宝支付页面
             chrome.tabs.executeScript(tab.id, {file: "js/AliPay.js"}, function(){
                 chrome.tabs.sendMessage(tab.id, {
                   "type": "order_amount", 
                   "order": stay_pay_order,
                   "alipay_password": alipay_password
                 }, function(obj){
-                  // console.log(obj);
                   if (obj && obj.type && obj.type == "order_amount_illegal") {
                     var amount_illegal_order = obj.order;
                     var message = "订单金额不合法导致没有支付，SCM订单金额:"+amount_illegal_order.amount+";阿里平台订单金额:"+obj.order_real_amount;
