@@ -44,7 +44,7 @@ if (purchase_order_id) {
         state_text = "订单金额不匹配，导致没有支付";
     }else if (state == 4) {
         state_text = "订单支付失败";
-    }else if (state == 4) {
+    }else if (state == 5) {
         state_text = "订单之前已经支付过了";
     }
     $(".error_content p").html("<br>订单号："+order_id+"<br>订单支付状态："+state+"<br>订单支付返回的信息："+message+"<br>SCM API返回错误信息："+scm_message);
