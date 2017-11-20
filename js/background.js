@@ -275,7 +275,7 @@ chrome.tabs.onUpdated.addListener(function(tabId , info) {
                   };
                 });
             });           
-          }else if(tab.url.startsWith("https://cashierew9.alipay.com/standard/lightpay/lightPayCashier.htm")){ //企业支付宝支付页面
+          }else if(tab.url.startsWith("https://cashierew9.alipay.com/standard/lightpay/lightPayCashier.htm") || tab.url.startsWith("https://cashiergtj.alipay.com/standard/lightpay/lightPayCashier.htm")){ //企业支付宝支付页面
             chrome.tabs.executeScript(tab.id, {file: "js/AliPay.js"}, function(){
                 chrome.tabs.sendMessage(tab.id, {
                   "type": "order_amount", 
